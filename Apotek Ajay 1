@@ -1,0 +1,103 @@
+#include <iostream>
+using namespace std;
+
+int main() {
+    int stocks[8] = {15, 25, 8, 12, 20, 6, 11, 18}; // Stok awal yang diubah lagi
+    char pilihan, lanjutkan;
+    int jumlah, nomorObat;
+
+    while (true) { // Loop utama program (perulangan keseluruhan)
+        // Tampilkan stok saat ini (inline, dengan nama obat baru)
+        cout << "===== Gudang Apotek Saya =====" << endl << endl;
+        cout << "1. Stock Neurobion      : " << stocks[0] << endl;
+        cout << "2. Stock Promag         : " << stocks[1] << endl;
+        cout << "3. Stock Sangir         : " << stocks[2] << endl;
+        cout << "4. Stock Redoxon        : " << stocks[3] << endl;
+        cout << "5. Stock Decolgen       : " << stocks[4] << endl;
+        cout << "6. Stock Sumagesic      : " << stocks[5] << endl;
+        cout << "7. Stock Antangin       : " << stocks[6] << endl;
+        cout << "8. Stock Bodrex         : " << stocks[7] << endl << endl;
+
+        cout << "===== MENU PROGRAM =====" << endl << endl;
+        cout << "A. Menambahkan Stock Obat" << endl;
+        cout << "B. Mengurangi Stock Obat" << endl;
+        cout << "C. Keluar Program" << endl;
+        cout << "Pilih Menu : ";
+        cin >> pilihan;
+
+        switch (pilihan) {
+            case 'A': // Case tambah stok
+                cout << "Anda memilih menambahkan stock obat." << endl;
+                cout << "Masukkan jumlah yang ingin ditambahkan: ";
+                cin >> jumlah;
+                if (jumlah < 0) {
+                    cout << "Jumlah harus positif! Operasi dibatalkan." << endl;
+                    break; // Keluar dari case A
+                }
+                // Loop validasi nomor obat (do-while)
+                do {
+                    cout << "Pilih obat (1-8): ";
+                    cin >> nomorObat;
+                } while (nomorObat < 1 || nomorObat > 8); // Ulangi jika salah
+                nomorObat--; // Adjust ke indeks array (0-7)
+                stocks[nomorObat] += jumlah;
+                cout << "Stock obat " << nomorObat + 1 << " berhasil ditambahkan " << jumlah << " unit." << endl;
+                break;
+
+            case 'B': // Case kurangi stok
+                cout << "Anda memilih mengurangi stock obat." << endl;
+                cout << "Masukkan jumlah yang ingin dikurangi: ";
+                cin >> jumlah;
+                if (jumlah < 0) {
+                    cout << "Jumlah harus positif! Operasi dibatalkan." << endl;
+                    break; // Keluar dari case B
+                }
+                // Loop validasi nomor obat (do-while)
+                do {
+                    cout << "Pilih obat (1-8): ";
+                    cin >> nomorObat;
+                } while (nomorObat < 1 || nomorObat > 8); // Ulangi jika salah
+                nomorObat--; // Adjust ke indeks array (0-7)
+                if (jumlah > stocks[nomorObat]) {
+                    cout << "Stock tidak mencukupi! Stock saat ini: " << stocks[nomorObat] << ". Operasi dibatalkan." << endl;
+                    break; // Keluar dari case B
+                }
+                stocks[nomorObat] -= jumlah;
+                cout << "Stock obat " << nomorObat + 1 << " berhasil dikurangi " << jumlah << " unit." << endl;
+                break;
+
+            case 'C': // Case keluar
+                cout << "Terima kasih telah menggunakan program!" << endl;
+                return 0; // Keluar program
+
+            default: // Default untuk input salah
+                cout << "Pilihan tidak valid! Silakan pilih A, B, atau C." << endl;
+                continue; // Kembali ke loop utama
+        }
+
+        // Tampilkan output keseluruhan setelah update (hanya jika A atau B)
+        if (pilihan == 'A' || pilihan == 'B') {
+            cout << endl;
+            // Tampilkan stok keseluruhan (inline, duplikasi, dengan nama obat baru)
+            cout << "===== Gudang Apotek Saya =====" << endl << endl;
+            cout << "1. Stock Neurobion      : " << stocks[0] << endl;
+            cout << "2. Stock Promag         : " << stocks[1] << endl;
+            cout << "3. Stock Sangir         : " << stocks[2] << endl;
+            cout << "4. Stock Redoxon        : " << stocks[3] << endl;
+            cout << "5. Stock Decolgen       : " << stocks[4] << endl;
+            cout << "6. Stock Sumagesic      : " << stocks[5] << endl;
+            cout << "7. Stock Antangin       : " << stocks[6] << endl;
+            cout << "8. Stock Bodrex         : " << stocks[7] << endl << endl;
+            // Tanya lanjut (perulangan jika Y)
+            cout << "Apakah ingin melanjutkan mengubah stock obat lain? (Y/N): ";
+            cin >> lanjutkan;
+            if (lanjutkan != 'Y') {
+                cout << "Terima kasih telah menggunakan program!" << endl;
+                return 0; // Keluar jika N
+            }
+            // Jika Y, loop utama akan berlanjut otomatis
+        }
+    }
+
+    return 0;
+}
